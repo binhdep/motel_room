@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" layout:decorate="~{layouts/admin}">
+<head>
+<title>Danh sách bài viết</title>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>Danh sách phòng trọ</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/administrator/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active"><a th:href="@{/administrator/room/list}">Danh sách Phòng trọ</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body card-body table-responsive p-0">
+								<form th:action="@{/administrator/room/list}"
+									th:object="${filter}">
+									<div class="input-group">
+
+										<input type="search" th:value="*{search}" th:field="*{search}"
+											class="form-control form-control-lg"
+											placeholder="Tìm kiếm">
+										<div class="input-group-append">
+
+											<button type="submit" class="btn btn-lg btn-info">
+												<i class="fa fa-search"></i> 
+												<span>Tìm kiếm</span>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">Danh sách Phòng trọ</h3>
+								<ul th:if="${paged.pageData.totalPages > 1}"
+									class="pagination m-0 float-right">
+									<li th:each="page : ${paged.getPages()}"
+										th:class="${#strings.equals(filter.pageNum, #strings.toString(page.key))}? 'page-item active' : 'page-item'">
+										<a
+												th:href="@{/administrator/room/list(pageSize=${filter.pageSize}, pageNum=${page.key}, search=${filter.search})}"
+												th:text=${page.key} th:class="page-link">
+											</a>
+									</li>
+								</ul>
+								
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body card-body table-responsive p-0">
+								<table class="table table-head-fixed text-nowrap">
+									<thead>
+										<tr>
+											<th>id</th>
+											<th>Tiêu đề</th>
+											<th>Giá Phòng</th>
+											<th>Danh mục</th>
+											<th style="width: 100px">Trạng thái phê duyệt</th>
+											
+											
+											<th style="width: 280px">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="motelRoom: ${paged.pageData.content}">
+											<td th:text="${motelRoom.id}">
+											</th>
+											<td th:text="${motelRoom.title}">
+											</th>
+											<td th:text="${#numbers.formatCurrency(motelRoom.price)}">
+											</th>
+											<td th:text="${motelRoom.category.name}">
+											</th>
+											<td th:if="${motelRoom.approve != null && motelRoom.approve}"><span
+												class="badge bg-success">Đã phê duyệt</span>
+											</th>
+
+											<td th:if="${motelRoom.approve == null || !motelRoom.approve}"><span
+												class="badge bg-warning">Đang chờ phê duyệt</span>
+											</th>
+											
+											<td>
+												<a th:if="${motelRoom.approve == null || !motelRoom.approve}" class="btn btn-success"
+												th:href="@{/administrator/room/approve/{motelRoomId}(motelRoomId=${motelRoom.id})}">Phê
+													duyệt</a> 
+													<a th:if="${motelRoom.approve != null && motelRoom.approve}" class="btn btn-warning"
+												th:href="@{/administrator/room/disapprove/{motelRoomId}(motelRoomId=${motelRoom.id})}">Hủy
+													phê duyệt</a>
+													
+													
+												<a th:if="${motelRoom.deleted == null || !motelRoom.deleted}" class="btn btn-danger"
+												th:href="@{/administrator/room/restore/{motelRoomId}(motelRoomId=${motelRoom.id})}">Xóa</a> 
+													<a th:if="${motelRoom.deleted != null && motelRoom.deleted}" class="btn btn-success"
+												th:href="@{/administrator/room/delete/{motelRoomId}(motelRoomId=${motelRoom.id})}">Khôi phục</a>
+													
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="">
+								sdsdsd
+							</div>
+							<div class="card-footer">
+								<ul th:if="${paged.pageData.totalPages > 1}"
+									class="pagination m-0">
+									<li th:each="page : ${paged.getPages()}"
+										th:class="${#strings.equals(filter.pageNum, #strings.toString(page.key))}? 'page-item active' : 'page-item'">
+										<a
+												th:href="@{/administrator/room/list(pageSize=${filter.pageSize}, pageNum=${page.key}, search=${filter.search})}"
+												th:text=${page.key} th:class="page-link">
+											</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+</body>
+</html>

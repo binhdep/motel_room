@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" layout:decorate="~{layouts/admin}">
+<head>
+<title th:text="#{user.list}"></title>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="#{user.list}"></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a th:href="@{/administrator/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active"><a th:href="@{/administrator/user/list}">Danh sách phòng trọ</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">Danh sách người dùng</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>id</th>
+											<th>Họ tên</th>
+											<th>Email</th>
+											<th>Quyền</th>
+											<th style="width: 100px">Trạng thái</th>
+											<th style="width: 300px">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="user: ${users}">
+											<td th:text="${user.id}"></td>
+											<td th:text="${user.userName}"></td>
+											<td th:text="${user.email}"></td>
+											<td > 
+												<span class="badge bg-success" th:each="role: ${user.roles}" th:text="${role.roleName}"></span>
+											</td>
+											<td th:if="${user.active != null && user.active}">
+											<span class="badge bg-success">Đã approve</span>
+
+											<td th:if="${user.active != null && !user.active}">
+											<span class="badge bg-warning">Đang chờ approve</span>
+											<td>
+												<a class="btn btn-primary" 
+												th:href="@{/administrator/user/edit/{id}(id=${user.id})}">
+													<i class="far fa-edit"></i>
+													<span th:text="#{global.edit}"></span>
+												</a>
+												<a class="btn btn-danger" 
+												th:href="@{/administrator/user/delete/{id}(id=${user.id})}">
+												<i class="fas fa-trash"></i>
+													<span th:text="#{global.delete}"></span>
+												</a>
+												<a th:if="${!user.active}" class="btn btn-success"
+												th:href="@{/administrator/user/approve/{userId}(userId=${user.id})}">Phê
+													duyệt</a> 
+													<a th:if="${user.active}" class="btn btn-warning"
+												th:href="@{/administrator/user/disapprove/{userId}(userId=${user.id})}">Hủy
+													phê duyệt</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+</body>
+</html>

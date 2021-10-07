@@ -1,0 +1,129 @@
+<!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" th:fragment="sidebar">
+    <!-- Brand Logo -->
+    <a th:href="@{/administrator/dashboard}" class="brand-link">
+      <img th:src="@{/dist/img/AdminLTELogo.png}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">MotelRoom</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img th:src="@{/dist/img/user2-160x160.jpg}" class="img-circle elevation-2" alt="User Image">
+        </div>
+			<div class="info">
+				<a th:href="@{/profile/me}" class="d-block"
+					th:text="${#authentication.getPrincipal().getUsername()}"></a>
+			</div>
+		</div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li sec:authorize="hasRole('ROLE_ADMIN')" 
+          	th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/category') ? 'nav-item menu-open' : 'nav-item'}">
+            <a href="#" 
+            th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/category') ? 'nav-link active' : 'nav-link'}">
+              <i class="nav-icon fas fa-store"></i>
+              <p th:inline="text">
+              	<span> Quản lý danh mục</span>
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{/administrator/category/create}" th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/category/create') ? 'nav-link active' : 'nav-link'}">
+                  <i class="far fa-plus-square nav-icon"></i>
+                  <span>Thêm danh mục</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/administrator/category/list}" th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/category/list') ? 'nav-link active' : 'nav-link'}">
+                  <i class="nav-icon fas fa-table" style="color: #FFFFFF;"></i>
+                  <p>
+                  	<span>Danh sách danh mục</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <li sec:authorize="hasRole('ROLE_ADMIN')" 
+          	th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/user') ? 'nav-item menu-open' : 'nav-item'}">
+            <a href="#" 
+            th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/user
+            ') ? 'nav-link active' : 'nav-link'}">
+              <i class="nav-icon fas fa-users"></i>
+              <p th:inline="text">
+              	<span> Quản lý người dùng</span>
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{/administrator/user/list}" th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/user/list') ? 'nav-link active' : 'nav-link'}">
+                  <i class="nav-icon fas fa-table" style="color: #FFFFFF;"></i>
+                  <p>
+                  	<span>danh sách người dùng</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+            
+              
+              <li sec:authorize="hasRole('ROLE_ADMIN')" 
+          	th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/room') ? 'nav-item menu-open' : 'nav-item'}">
+            <a href="#" 
+            th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/room') ? 'nav-link active' : 'nav-link'}">
+              <i class="nav-icon fas fa-th"></i>
+              <p th:inline="text">
+              	<span> Quản lý phòng trọ</span>
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{/administrator/room/list}" th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/room/list') ? 'nav-link active' : 'nav-link'}">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                  	<span>Danh sách phòng trọ</span>
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <li sec:authorize="hasRole('ROLE_ADMIN')" 
+          	th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/comment') ? 'nav-item menu-open' : 'nav-item'}">
+            <a href="#" 
+            th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/comment') ? 'nav-link active' : 'nav-link'}">
+              <i class="fas fa-comments"></i>
+              <p th:inline="text">
+              	<span> Quản lý bình luận</span>
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a th:href="@{/administrator/comment/list}" th:attr="class=${#strings.contains(#httpServletRequest.requestURI, '/administrator/comment/') ? 'nav-link active' : 'nav-link'}">
+                  <i class="nav-icon fas fa-table"></i>
+                  <span>Danh sách bình luận</span>
+                </a>
+              </li>
+            </ul>
+          </li><br/><br/>
+          <li class="nav-link dark">
+          	<a th:href="@{/}"><i class="fas fa-home"></i><span>Về trang chủ</span></a>
+          </li>
+     
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en" layout:decorate="~{layouts/frontend}">
+<head>
+<title >Chỉnh sửa trang cá nhân</title>
+<th:block layout:fragment="styles">
+	<link rel="stylesheet" th:href="@{/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css}">
+	<link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
+	<link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+	<link rel="stylesheet" th:href="@{/frontend/css/style.css}">
+</th:block>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="content">		
+			<div class="container">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-md-12">
+						<!-- jquery validation -->
+						<form autocomplete="off" action="#"
+							th:action="@{/profile/me/edit/{id}(id=${user.id})}"
+							th:object="${user}" method="post"
+							class="form-horizontal" role="form">
+							<div class="card">
+								<div class="card-header">
+									<h3 class="card-title">Chỉnh sửa thông tin cá nhân</h3>
+									<div class="btn-group float-right">
+										<button type="submit" class="btn btn-info">
+											<i class="fas fa-save"></i> Save
+										</button>
+										<a th:href="@{/profile/me}" class="btn btn-success"><i
+											class="fas fa-angle-left"></i> Back</a>
+									</div>
+								</div>
+								<!-- /.card-header -->
+								<!-- form start -->
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label for="firstName" th:text="#{user.add.first_name}"></label>
+												<input type="text" th:field="*{firstName}" th:attr="placeholder=#{user.add.first_name}"
+													class="form-control" /> 
+													<span
+													th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+													id="code-error" class="error error-field"></span>
+											</div>
+											<div class="form-group">
+												<label for="lastName" th:text="#{user.add.last_name}"></label>
+												<input type="text" th:field="*{lastName}" th:attr="placeholder=#{user.add.last_name}"
+													class="form-control" /> 
+													<span
+													th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+													id="code-error" class="error error-field"></span>
+											</div>
+											<div class="form-group">
+												<label for="email" th:text="#{user.add.email}"></label>
+												<input type="text" th:field="*{email}" th:attr="placeholder=#{user.add.email}"
+													class="form-control" /> 
+													<span
+													th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+													id="code-error" class="error error-field"></span>
+											</div>
+											<div class="form-group">
+												<label for="userName" th:text="#{user.add.username}"></label>
+												<input type="text" th:field="*{userName}" disabled="disabled" th:attr="placeholder=#{user.add.username}"
+													class="form-control" /> 
+													<span
+													th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+													id="code-error" class="error error-field"></span>
+											</div>
+											<div class="form-group">
+												<label for="password" th:text="#{user.add.password}"></label>
+												<input type="password" th:field="*{password}" th:attr="placeholder=#{user.add.password}"
+													class="form-control" /> 
+													<span
+													th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+													id="code-error" class="error error-field"></span>
+											</div>
+											<div class="form-group">
+												<label for="phoneNumber" th:text="#{user.add.phone}"></label>
+												<input type="text" th:field="*{phoneNumber}" th:attr="placeholder=#{user.add.phone}"
+													class="form-control" /> 
+													<span
+													th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+													id="code-error" class="error error-field"></span>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<!-- /.card-body -->
+								<div class="card-footer">
+									<div class="btn-group float-right">
+										<button type="submit" class="btn btn-info">
+											<i class="fas fa-save"></i> lưu
+										</button>
+										<a th:href="@{/profile/me}"
+											class="btn btn-success"><i class="fas fa-angle-left"></i>
+											Quay lại</a>
+									</div>
+								</div>
+
+							</div>
+							<!-- /.card -->
+						</form>
+					</div>
+					<!--/.col (left) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+
+		<!-- /.content -->
+		</div>
+	<!-- /.content-wrapper -->
+</body>
+<th:block layout:fragment="scripts">
+	<script th:src="@{/plugins/select2/js/select2.full.min.js}"></script>
+	<script th:src="@{/plugins/bootstrap-switch/js/bootstrap-switch.min.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+</th:block>
+</html>

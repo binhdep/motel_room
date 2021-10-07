@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en" layout:decorate="~{layouts/admin}">
+<head>
+<title>Danh sách phản hồi</title>
+</head>
+<body>
+	<div class="content-wrapper" layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>Danh sách phản hồi</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a
+								th:href="@{/administrator/dashboard}">Home</a></li>
+							<li class="breadcrumb-item active"><a
+								th:href="@{/administrator/room/list}">Danh sách phản hồi</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body card-body table-responsive p-0">
+								<form th:action="@{/administrator/comment/list}"
+									th:object="${filter}">
+									<div class="input-group">
+
+										<input type="search" th:value="*{search}" th:field="*{search}"
+											class="form-control form-control-lg"
+											placeholder="Tìm kiếm">
+										<div class="input-group-append">
+
+											<button type="submit" class="btn btn-lg btn-info">
+												<i class="fa fa-search"></i> 
+												<span>Tìm kiếm</span>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<ul th:if="${paged.pageData.totalPages > 1}"
+									class="pagination m-0">
+									<li th:each="page : ${paged.getPages()}"
+										th:class="${#strings.equals(filter.pageNum, #strings.toString(page.key))}? 'page-item active' : 'page-item'">
+										<a
+										th:href="@{/administrator/comment/list(pageSize=${filter.pageSize}, pageNum=${page.key}, search=${filter.search})}"
+										th:text=${page.key} th:class="page-link"> </a>
+									</li>
+								</ul>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body card-body table-responsive p-0">
+								<table class="table table-head-fixed text-nowrap">
+									<thead>
+										<tr>
+											<th>Id</th>
+											<th>Đã phản hồi trên tin đăng</th>
+											<th>Tên người phản hồi</th>
+											<th>Nội dung phản</th>
+											<th style="width: 100px">Trạng thái Approve</th>
+											<th style="width: 280px">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="comment: ${paged.pageData.content}">
+											<td th:text="${comment.id}">
+											</th>
+											<td><a
+												th:href="@{/administrator/room/details/{id}(id=${comment.room.id})}"
+												th:text="${comment.room.title}"> </a>
+											</th>
+											<td th:text="${comment.commentedBy}">
+											</th>
+											<td th:text="${#strings.abbreviate(comment.content,10)}">
+											</th>
+											<td th:if="${comment.approved}"><span
+												class="badge bg-success">Đã approve</span>
+											</th>
+
+											<td th:if="${!comment.approved}"><span
+												class="badge bg-warning">Đang chờ approve</span>
+											</th>
+
+											<td><a th:if="${!comment.approved}" class="btn btn-success"
+												th:href="@{/administrator/comment/approve/{commentId}(commentId=${comment.id})}">Phê
+													duyệt</a> 
+													<a th:if="${comment.approved}" class="btn btn-warning"
+												th:href="@{/administrator/comment/disapprove/{commentId}(commentId=${comment.id})}">Hủy
+													phê duyệt</a>
+													 <a class="btn btn-danger"
+												th:href="@{/administrator/comment/delete/{id}(id=${comment.id})}"><i
+													class="fas fa-trash"></i> Xóa</a></td>
+										</tr>
+									</tbody>
+								</table>
+
+								<div class="card-footer">
+									<ul th:if="${paged.pageData.totalPages > 1}"
+										class="pagination m-0">
+										<li th:each="page : ${paged.getPages()}"
+											th:class="${#strings.equals(filter.pageNum, #strings.toString(page.key))}? 'page-item active' : 'page-item'">
+											<a
+											th:href="@{/administrator/comment/list(pageSize=${filter.pageSize}, pageNum=${page.key}, search=${filter.search})}"
+											th:text=${page.key} th:class="page-link"> </a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+</body>
+</html>
